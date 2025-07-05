@@ -4,6 +4,7 @@ const tools = require("./src/tools.js");
 const cmd = require("./src/cmd.js");
 
 const app = express();
+require('dotenv').config();
 
 const corsOpt = {
   origin: '*',
@@ -16,18 +17,20 @@ app.use(cors(corsOpt));
 app.use(express.json());
 
 app.post("/smb/delete", (req, res) => {
-  var folderPath = req.body.folderPath;
-  var fileName = req.body.fileName;
+  const rootFolderPath = req.body.rootFolderPath;
+  const personalFolderPath = req.body.personalFolderPath;
+  const fileName = req.body.fileName;
 
-  if (!folderPath || !fileName) {
-    res.send(tools.logger("/smb/delete no folderPath or fileName provided"));
+  if (!rootFolderPath || !personalFolderPath || !fileName) {
+    res.send(tools.logger("/smb/delete no rootFolderPath, personalFolderPath or fileName provided"));
     return;
   }
 
-  let result = cmd.deleteFile(folderPath, fileName);
+  let result = cmd.deleteFile(rootFolderPath, personalFolderPath, fileName);
   res.send(tools.logger(result));
 });
 
-app.listen(5928, () => {
+app.listen(process.env.PORT, () => {
+  cmd.kerberosAuth();
   tools.logger("Application started");
 });
