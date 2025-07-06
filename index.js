@@ -27,7 +27,7 @@ app.post("/smb/delete", (req, res) => {
   }
 
   let result = cmd.deleteFile(rootFolderPath, personalFolderPath, fileName);
-  res.send(tools.logger(result));
+  res.send(result);
 });
 
 app.listen(process.env.PORT || 5928, () => {
