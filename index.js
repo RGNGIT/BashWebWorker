@@ -30,7 +30,7 @@ app.post("/smb/delete", (req, res) => {
   res.send(tools.logger(result));
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 5928, () => {
   cmd.kerberosAuth();
   tools.logger("Application started");
 });

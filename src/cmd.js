@@ -29,6 +29,7 @@ function kerberosAuth() {
   const keytab = process.env.KRB_KEYTAB;
   const principal = process.env.KRB_PRINCIPAL;
 
+  tools.logger(`kerberosAuth. Logging in with Keytab ${keytab} Principal ${principal}`);
   const command = `kinit -k -t ${keytab} ${principal}`;
   exec(command, (error, stdout, stderr) => {
     if (stdout)
