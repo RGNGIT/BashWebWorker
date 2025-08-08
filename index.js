@@ -17,6 +17,9 @@ app.use(cors(corsOpt));
 app.use(express.json());
 
 app.post("/smb/delete", (req, res) => {
+  // HACK: Будем делать ауз каждый раз, потому что истекает срок билета
+  cmd.kerberosAuth();
+
   const rootFolderPath = req.body.rootFolderPath;
   const personalFolderPath = req.body.personalFolderPath;
   const fileName = req.body.fileName;
@@ -30,7 +33,7 @@ app.post("/smb/delete", (req, res) => {
   res.send(result);
 });
 
-app.listen(process.env.PORT || 5928, () => {
+app.listen(5928 || 5928, () => {
   cmd.kerberosAuth();
   tools.logger("Application started");
 });

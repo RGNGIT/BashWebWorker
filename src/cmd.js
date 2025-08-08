@@ -6,7 +6,7 @@ require("dotenv").config();
 
 function deleteFile(rootFolderPath, personalFolderPath, fileName) {
   let result = "OK";
-  const appDomainUser = process.env.APP_DOMAIN_USER;
+  const appDomainUser = "Svc-dir@HQ.CORP.RUSSNEFT.RU";
 
   tools.logger(`deleteFile. Deleting file ${rootFolderPath}/${personalFolderPath}/${fileName} DomainUser ${appDomainUser}`);
   const command = `smbclient -k '${rootFolderPath}' -U ${appDomainUser} -c 'cd "${personalFolderPath}"; del "${fileName}"; exit;'`;
@@ -23,8 +23,8 @@ function deleteFile(rootFolderPath, personalFolderPath, fileName) {
 }
 
 function kerberosAuth() {
-  const keytab = process.env.KRB_KEYTAB;
-  const principal = process.env.KRB_PRINCIPAL;
+  const keytab = "/etc/krb5.keytab";
+  const principal = "HTTP/hq-co1-dirtest.hq.corp.russneft.ru@HQ.CORP.RUSSNEFT.RU";
 
   tools.logger(`kerberosAuth. Logging in with Keytab ${keytab} Principal ${principal}`);
   const command = `kinit -k -t ${keytab} ${principal}`;
